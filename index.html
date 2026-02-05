@@ -14,19 +14,37 @@
             <h1>THE ZULA HOUSE</h1>
         </header>
 
-        <div class="pdf-wrapper">
-            <object data="tzh-single-swings.pdf#toolbar=1&navpanes=0&scrollbar=1&view=FitH" type="application/pdf"
-                class="pdf-iframe">
-                <iframe
-                    src="https://docs.google.com/viewer?url=https://thezulahouse.vercel.app/tzh-single-swings.pdf&embedded=true"
-                    class="pdf-iframe" title="THE ZULA HOUSE">
-                    <p>Your browser does not support PDFs.
-                        <a href="tzh-single-swings.pdf">Download the PDF</a> to view it.
-                    </p>
-                </iframe>
-            </object>
+        <div class="pdf-wrapper" id="pdfContainer">
+            <!-- PDF will be loaded here -->
         </div>
     </div>
+
+    <script>
+        // Detect if user is on mobile
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        const pdfContainer = document.getElementById('pdfContainer');
+        const pdfUrl = 'tzh-single-swings.pdf';
+
+        if (isMobile) {
+            // For mobile devices, use Google Docs Viewer which handles PDFs better
+            pdfContainer.innerHTML = `
+                <iframe 
+                    src="https://docs.google.com/viewer?url=${window.location.origin}/${pdfUrl}&embedded=true" 
+                    class="pdf-iframe" 
+                    title="THE ZULA HOUSE"
+                    frameborder="0">
+                </iframe>
+            `;
+        } else {
+            // For desktop, use native PDF viewer
+            pdfContainer.innerHTML = `
+                <embed 
+                    src="${pdfUrl}#toolbar=1&navpanes=0&scrollbar=1" 
+                    type="application/pdf" 
+                    class="pdf-iframe">
+            `;
+        }
+    </script>
 </body>
 
 </html>
